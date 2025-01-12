@@ -38,4 +38,4 @@ Run the program :
 ```
 python3 generator.py ${structur_name}
 ```
-Example : ``` python3 generator.py "Google" ```
+Example : ``` python3 bs_generator.py "Google" ```
