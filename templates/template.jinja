@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    {% include 'styles.jinja' %}
+    <body>
+        {% with name=data._Data__structure.upper() %}
+            {% include 'header.jinja' %}
+        {% endwith %}
+        <div class="header" style="margin-top: 40px">
+            <h1>MONTANT ET MODALITES DE L'OPERATION</h1>
+        </div>
+        <div style="margin-top: 40px;">
+            <p>
+                La Société en Participation TECHMIND {{ data._Data__target_name.upper() }} (la « SEP »), non révélée aux tiers, a été créée aux
+                fins d'acquérir des actions de la Société {{ structure }}, société par actions simplifiée enregistrée au Tribunal de
+                commerce de {{ data._Data__tribunal_name }} sous le numéro {{ data._Data__target_rcs }} et dont le siège social est au {{ data._Data__target_addr }} (« {{ data._Data__target_name }} »), ou toute société qui lui serait substituée en suite de toute
+                restructuration (notamment fusion, absorption).
+            </p>
+            <p>
+                La SEP a également comme objet la gestion et la vente de ces titres, et plus globalement et généralement
+                toutes opérations financières, commerciales, industrielles, mobilières et immobilières pouvant se rattacher
+                directement ou indirectement à l'objet ci-dessus ou à tous objets similaires ou connexes, de nature à
+                favoriser son développement ou son extension.
+            </p>
+            <p>    
+                Le souscripteur en signant le bulletin de souscription confirme avoir pris connaissance des statuts de la
+                Société dont un exemplaire lui a été remis, et accepte que les statuts soient consultables au siège social sur
+                demande faite au Gérant au moins quinze (15) jours précédant la consultation.
+            </p>
+            <p>    
+                Afin de participer à l'augmentation de capital de la Société {{ data._Data__target_name }} par l'intermédiaire de la SEP, les
+                associés ont décidé d'apporter à la SEP, en numéraire, la somme hors frais d'entrée de {{ data._Data__montant_investi }} euros ({{ data._Data__price_letter }}) aux fins de la
+                souscription {{ data._Data__action_seed }} actions “{{ data._Data__action_name }}”, au prix de {{ data._Data__action_price }} euros par action de la société {{ data._Data__target_name }}.
+            </p>
+            <p>    
+                Le prix de souscription des parts de la SEP devra être libéré en totalité lors de leur souscription en
+                numéraire, y compris, le cas échéant, par voie de compensation avec des créances liquides et exigibles
+                détenues sur la SEP dans les conditions fixées par la loi.
+            </p>
+            <p>    
+                Le montant de la souscription devra être déposé sur le compte dédié, ouvert au nom du Gérant, auprès de
+                la banque Qonto (Olinda SAS), dont les coordonnées bancaires sont :<br>
+                IBAN : {{ data._Data__iban }}
+            </p>
+        </div>
+        <img src={{ data._Data__iban_img }} alt="iban image" style="width: 100%;height: 235px;"/>
+        {% with name=data._Data__target_name.upper() %}
+            {% include 'header.jinja' %}
+        {% endwith %}
+        <div class="header">
+            <h1>BULLETIN DE SOUSCRIPTION</h1>
+        </div>
+        <br>
+        {% if data._Data__legal_type|string() == "Via une holding  / Through a holding company" %}
+            {% include 'holding_company.jinja' %}
+        {% elif data._Data__legal_type|string() == "A titre personnel / Personally" %}
+            {% include 'physical_pers.jinja' %}
+        {% endif %}
+        <p class="souscripteur-end">Ci-après dénommé(e) le « Souscripteur »</p>
+        <p>Après pris connaissance des conditions et modalités de constitution de la SEP TECHMIND {{ data._Data__target_name.upper() }},</p>
+        <p>Le Souscripteur :</p>
+        <ul class="souscripteur">
+            <li>reconnaît avoir eu toutes les informations nécessaires lui permettant d’apprécier la nature, la structuration, les risques et les coûts de la souscription projetée ;</li>
+            <li>reconnaît avoir pu poser toutes les questions nécessaires à sa bonne compréhension et se déclare pleinement satisfait des réponses qui lui ont été fournies.</li>
+            <li>reconnaît avoir pris connaissance des statuts de la Société en date du {{ data._Data__date }} dont un exemplaire lui a été remis et y adhère.</li>
+            <li>accepte en cas de modification des statuts de la Société que ces derniers une fois modifiés lui soient notifiés par tout moyen écrit par le Gérant.</li>
+        </ul>
+        <p>
+            A cet égard, il est recommandé au Souscripteur de se rapprocher d’un conseiller en gestion de patrimoine,
+            ou de tout autre conseil juridique et/ou fiscal, afin notamment de faire étudier sa situation et les
+            incidences juridiques, fiscales et/ou patrimoniales de la présente souscription.
+        </p>
+        <p>
+            Le Souscripteur a conscience que la souscription au capital d’une société en participation est risquée et
+            non liquide. Chaque Souscripteur est averti que son capital n’est pas garanti et peut ne pas lui être restitué
+            en totalité ou ne l’être que partiellement. Un Souscripteur pourrait ne pas être en mesure de liquider
+            rapidement sa participation dans la Société dans un délai compatible avec ses contraintes ou pour toute
+            autre raison.
+        </p>
+        <p>
+            La modification des textes applicables aux sociétés en participation en vigueur postérieurement à la date
+            de constitution est susceptible d’avoir un impact juridique et fiscal négatif pour la SEP TECHMIND
+            {{ data._Data__target_name.upper() }} et/ou ses associés. De plus, cette souscription peut engendrer des considérations fiscales
+            complexes qui peuvent différer pour chaque associé
+        </p>
+        <p>Après avoir pris connaissance de ce qui précède, le Souscripteur :</p>
+        <ul>
+            <li>Déclare apporter {{ data._Data__montant_souscription }} € à la SEP, correspondant à l’acquisition de {{ data._Data__part_sociales }} parts sociales telles que définies dans les statuts;</li>
+            <li>Déclare libérer intégralement le montant de la souscription, soit la somme de {{ data._Data__montant_souscription }} € ({{ data._Data__montant_souscription_letter }});</li>
+            <li>Déclare verser les frais d’entrée s’élevant à {{ data._Data__frais_entre }} € ({{ data._Data__frais_entre_letter }}) rémunérant les tâches de négociation et de réalisation de l’Opération;</li>
+            <li><strong>Déclare en conséquence libérer la totalité de la souscription et des frais d’entrée, soit :
+                <ul class="souscripteur">
+                    <li>la somme de {{ data._Data__part_sociales }} € par virement bancaire établi à l’ordre du compte dédié à l’opération, identifié par son IBAN : {{ data._Data__iban }}, ouvert au nom du Gérant,</li>
+                    <li>et la somme de {{ data._Data__frais_entre }} € établi à l’ordre de Techmind, identifié par son IBAN {{ data._Data__iban_techmind }}.</strong></li>
+                </ul>
+            <li>Reconnaît qu’une copie du bulletin m’a été remise à l’instant même.</li>
+            <li>Reconnaît que la souscription objet des présentes est subordonnée au versement intégral du montant souscrit ainsi qu’à la remise de l’ensemble des pièces complémentaires listées en annexe.</li>
+        </ul>
+        <br>
+        <p>Fait à Paris, le {{ data._Data__date }},</p>
+        <p>Précédée de la mention :</p>
+        <p style="font-style: italic;">«Bon pour la souscription de {{ data._Data__part_sociales }} parts sociales de la SEP TECHMIND {{ data._Data__target_name.upper() }}»</p>
+        <br><br>
+        <p>{{ data._Data__structure.upper() }} représenté par {{ data._Data__gender }} {{ data._Data__legal_firstname}} {{ data._Data__legal_lastname.upper() }}</p>
+    </body>
+</html>
