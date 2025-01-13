@@ -48,7 +48,7 @@ class Data:
         self.__api = Api(os.environ['API_KEY'])
         self.__get_airtable_data(structure)
         self.__get_target_data()
-        self.__set_pappers_data
+        self.__get_pappers_data()
         self.__calc_action_seed()
         self.__frais_entre = self.__set_entries_fee()
         self.__montant_souscription = self.__calc_montant_souscription()
@@ -131,7 +131,7 @@ class Data:
                 self.__target_addr = record['fields']['Adresse de la société cible']
                 self.__target_rcs = record['fields']['RCS de la société cible']
                 return
-        print("Error: cannot get target data")
+        print("Error: cannot get target data from airtable")
         exit()
 
     def __get_airtable_data(self, structure: str) -> None:
@@ -173,14 +173,19 @@ class Data:
             print("Error: get data from airtable failed")
             exit()
 
-    def __set_pappers_data(self) -> None:
+    def __get_pappers_data(self) -> None:
         pappers_data: json = None
+        pappers_list: list = []
 
-        with open("pappers_data.json", "r") as f:
+        with open("pappers.json", "r") as f:
             pappers_data = json.load(f)
-        self.__capital = pappers_data["capital"]
-        self.__tribunal_name = pappers_data["greffe"] #to vérify
-        self.__siege_social_addr = pappers_data["siege"]["adresse_ligne_1"] # addr ligne 2 ?
+        for data in pappers_data["papper"]:
+            if data["siren"] == self.__rcs.replace(" ", ""):
+                self.__tribunal_name = data["data"]["greffe"] #to vérify
+                self.__siege_social_addr = data["data"]["siege"]["adresse_ligne_1"] # addr ligne 2 ?
+                return
+        print("Error: cannot get data from pappers")
+        exit()
 
     def __set_date(self) -> None:
         self.__date = format_datetime(datetime.now(), "dd MMMM yyyy", locale='fr_FR')
