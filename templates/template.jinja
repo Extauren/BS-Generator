@@ -11,7 +11,13 @@
         <div style="margin-top: 40px;">
             <p>
                 La Société en Participation TECHMIND {{ data._Data__target_name.upper() }} (la « SEP »), non révélée aux tiers, a été créée aux
-                fins d'acquérir des actions de la Société {{ structure }}, société par actions simplifiée enregistrée au Tribunal de
+                fins
+                {% if data._Data__bsa_air|string() == "True" %}
+                    d'investir dans
+                {% else %}
+                    d'acquérir des actions de
+                {% endif %}
+                la Société {{ data._Data__target_name.upper() }}, société par actions simplifiée enregistrée au Tribunal de
                 commerce de {{ data._Data__tribunal_name }} sous le numéro {{ data._Data__target_rcs }} et dont le siège social est au {{ data._Data__target_addr }} (« {{ data._Data__target_name }} »), ou toute société qui lui serait substituée en suite de toute
                 restructuration (notamment fusion, absorption).
             </p>
@@ -22,15 +28,19 @@
                 favoriser son développement ou son extension.
             </p>
             <p>    
-                Le souscripteur en signant le bulletin de souscription confirme avoir pris connaissance des statuts de la
+                En signant le bulletin de souscription, le souscripteur confirme avoir pris connaissance des statuts de la
                 Société dont un exemplaire lui a été remis, et accepte que les statuts soient consultables au siège social sur
                 demande faite au Gérant au moins quinze (15) jours précédant la consultation.
             </p>
-            <p>    
-                Afin de participer à l'augmentation de capital de la Société {{ data._Data__target_name }} par l'intermédiaire de la SEP, les
-                associés ont décidé d'apporter à la SEP, en numéraire, la somme hors frais d'entrée de {{ data._Data__montant_investi }} euros ({{ data._Data__price_letter }}) aux fins de la
-                souscription {{ data._Data__action_seed }} actions “{{ data._Data__action_name }}”, au prix de {{ data._Data__action_price }} euros par action de la société {{ data._Data__target_name }}.
-            </p>
+            {% if data._Data__bsa_air|string() == "True" %}
+                {% include 'bsa_air.jinja' %}
+            {% else %}
+                <p>
+                    Afin de participer à l'augmentation de capital de la Société {{ data._Data__target_name }} par l'intermédiaire de la SEP, les
+                    associés ont décidé d'apporter à la SEP, en numéraire, la somme hors frais d'entrée de {{ data._Data__montant_investi }} euros ({{ data._Data__price_letter }}) aux fins de la
+                    souscription {{ data._Data__action_seed }} actions “{{ data._Data__action_name }}”, au prix de {{ data._Data__action_price }} euros par action de la société {{ data._Data__target_name }}.
+                </p>
+            {% endif %}
             <p>    
                 Le prix de souscription des parts de la SEP devra être libéré en totalité lors de leur souscription en
                 numéraire, y compris, le cas échéant, par voie de compensation avec des créances liquides et exigibles
@@ -61,7 +71,7 @@
         <ul class="souscripteur">
             <li>reconnaît avoir eu toutes les informations nécessaires lui permettant d’apprécier la nature, la structuration, les risques et les coûts de la souscription projetée ;</li>
             <li>reconnaît avoir pu poser toutes les questions nécessaires à sa bonne compréhension et se déclare pleinement satisfait des réponses qui lui ont été fournies.</li>
-            <li>reconnaît avoir pris connaissance des statuts de la Société en date du {{ data._Data__date }} dont un exemplaire lui a été remis et y adhère.</li>
+            <li>reconnaît avoir pris connaissance des statuts de la Société en date du {{ data._Data__status_date }} dont un exemplaire lui a été remis et y adhère.</li>
             <li>accepte en cas de modification des statuts de la Société que ces derniers une fois modifiés lui soient notifiés par tout moyen écrit par le Gérant.</li>
         </ul>
         <p>
