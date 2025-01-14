@@ -1,6 +1,7 @@
 import sys
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
+from spire.doc import *
 from data import Data
 
 def print_help() -> None:
@@ -14,8 +15,24 @@ def generate_pfd(data: Data) -> None:
     template = env.get_template('template.jinja')
     html: str = template.render(data = data)
     
+    convert_html_to_docx(html)
     html_to_pdf(html, "bulletin_de_souscription.pdf")
     print("PDF have been generated succesfully")
+
+def convert_html_to_docx(html):
+    document = Document()
+    sec = document.AddSection()
+    paragraph = sec.AddParagraph()
+
+    paragraph.AppendHTML(html)
+    document.SaveToFile("test.docx", FileFormat.Docx2016)
+    document.Close()
+    print("Docx have been generated succesfully")
+
+    # output = pypandoc.convert_text(
+    #     html, format='html', to='docx', extra_args=pdoc_args, outputfile="output2.docx"
+    # )
+
 
 def get_arguments() -> str:
     argv: list = sys.argv
@@ -30,7 +47,6 @@ def get_arguments() -> str:
     return argv[1]
 
 def main():
-    #generate word format
     structure: str = None
 
     structure = get_arguments()
