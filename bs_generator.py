@@ -2,7 +2,7 @@ import sys
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from data import Data
-from gui import gui
+# from gui import gui
 
 def print_help() -> None:
     print('python bs_generator.py "{structure_name} --bsa_air"')
