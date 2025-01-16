@@ -182,7 +182,6 @@ class Data:
 
     def __get_pappers_data(self) -> None:
         pappers_data: json = None
-        pappers_list: list = []
 
         with open("pappers.json", "r") as f:
             pappers_data = json.load(f)
