@@ -21,6 +21,7 @@ class Data:
     __forme_social: str = None
     __postal_code: str = None
     __montant_investi: str = None
+    __montant_investi_letter: str = None
     __price_letter: str = None
     __tribunal_name: str = None
     __montant_souscription: str = None
@@ -42,8 +43,10 @@ class Data:
     __target_name: str = None
     __target_addr: str = None
     __target_rcs: str = None
+    __status_date: str = None
+    __bsa_air: str = "False"
 
-    def __init__(self, structure: str) -> None:
+    def __init__(self, structure: str, bsa_air: bool) -> None:
         load_dotenv()
         self.__api = Api(os.environ['API_KEY'])
         self.__get_airtable_data(structure)
@@ -58,8 +61,11 @@ class Data:
         self.__part_sociales = self.__calc_part_sociale()
         self.__part_sociales_letter = self.__convert_price_in_letter(self.__part_sociales)
         self.__frais_entre_letter = self.__convert_price_in_letter(self.__frais_entre)
+        self.__montant_investi_letter = self.__convert_price_in_letter(self.__montant_investi)
         self.__set_date()
         self.__set_gender_in_letter()
+        if bsa_air:
+            self.__bsa_air = True
 
     def __convert_price_to_fr(self, price: str) -> str:
         price_fr: str = price.replace(".", ",")
@@ -130,6 +136,7 @@ class Data:
                 self.__target_name = record['fields']['Nom de la société cible']
                 self.__target_addr = record['fields']['Adresse de la société cible']
                 self.__target_rcs = record['fields']['RCS de la société cible']
+                self.__status_date = record['fields']['Date des statuts']
                 return
         print("Error: cannot get target data from airtable")
         exit()
