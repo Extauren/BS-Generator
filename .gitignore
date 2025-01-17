@@ -7,6 +7,7 @@ __pycache__/
 rcs_list.txt
 bulletin_de_souscription.pdf
 Exemple_bulletin_de_souscription.pdf
+pappers.json
 
 # C extensions
 *.so

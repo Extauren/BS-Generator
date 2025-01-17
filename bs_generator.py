@@ -2,7 +2,6 @@ import sys
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from data import Data
-# from gui import gui
 
 def print_help() -> None:
     print('python bs_generator.py "{structure_name} --bsa_air"')
@@ -41,7 +40,6 @@ def main():
     structure, bsa_air = get_arguments()
     data = Data(structure, bsa_air)
     generate_pfd(data)
-    # gui()
 
 if __name__ == "__main__":
     main()
