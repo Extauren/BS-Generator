@@ -2,6 +2,7 @@ import sys
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from data import Data
+from gui import gui
 
 def print_help() -> None:
     print('python bs_generator.py "{structure_name}"')
@@ -30,12 +31,12 @@ def get_arguments() -> str:
     return argv[1]
 
 def main():
-    #generate word format
-    structure: str = None
+    # structure: str = None
 
-    structure = get_arguments()
-    data = Data(structure)
-    generate_pfd(data)
+    # structure = get_arguments()
+    # data = Data(structure)
+    # generate_pfd(data)
+    gui()
 
 if __name__ == "__main__":
     main()
