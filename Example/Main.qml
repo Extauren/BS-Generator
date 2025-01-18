@@ -1,7 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "components"
+import QtQuick.Dialogs
+import QtCore
+// import "components"
+import bs_generator 1.0
 
 Window {
     width: 300
@@ -9,16 +12,32 @@ Window {
     visible: true
     title: "BS Generator"
 
-    readonly property list<string> texts: ["Hallo Welt", "Hei maailma",
-                                           "Hola Mundo", "Привет мир"]
+    function checkArgument(structure, bsType) {
+        if (structure == "") {
+            dialog.text = "Structure name is missing"
+            dialog.open()
+            return
+        }
+        if (fileDialog.selectedFile == "") {
+            dialog.text = "File path is missing"
+            dialog.open()
+            return
+        }
+        else {
+            pyConsole.generate_bs(structure, bsType, fileDialog.selectedFile)
+            dialog.open()
+        }
+    }
 
-    function setText() {
-        var i = Math.round(Math.random() * 3)
-        text.text = texts[i]
+    Console {
+        id: pyConsole
     }
 
     ColumnLayout {
-        anchors.fill:  parent
+        spacing: 50
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Rectangle {}
 
         Text {
             id: text
@@ -27,11 +46,20 @@ Window {
         }
 
         TextField {
-            placeholderText: qsTr("Nom de la structure")
+            id: textField
+            placeholderText: qsTr("Structure name")
             Layout.alignment: Qt.AlignHCenter
+            background: Rectangle {
+                implicitWidth: 150
+                implicitHeight: 30
+                opacity: enabled ? 1 : 0.3
+                border.width: 1.5
+                radius: 10
+            }
         }
         
         ButtonGroup {
+            id: bsType
             buttons: column.children
             onClicked: console.log("clicked:", button.text)
         }
@@ -39,24 +67,52 @@ Window {
         Row {
             id: column
             Layout.alignment: Qt.AlignHCenter
-
             RadioButton {
                 checked: true
-                text: qsTr("BS")
+                text: qsTr("SEP")
             }
-
             RadioButton {
                 text: qsTr("BSA AIR")
             }
+            RadioButton {
+                text: qsTr("SAS")
+            }
         }
 
-        ProgressBar{}
+        ColumnLayout {
+            Layout.alignment: Qt.AlignHCenter
+            CheckBox {
+                checked: false
+                text: qsTr("Generate Docx")
+            }
+        }
 
         Button {
-            onClicked: setText()
+            text: qsTr("Choose location")
+            onClicked: fileDialog.open()
+            Layout.alignment: Qt.AlignHCenter
+            // background: Rectangle {
+                // implicitWidth: 150
+                // implicitHeight: 40
+                // opacity: enabled ? 1 : 0.3
+                // border.color: control.down ? "#17a81a" : "#21be2b"
+                // border.width: 1.5
+                // radius: 15
+            // }
+        }
 
+        FileDialog {
+            id: fileDialog
+            fileMode: FileDialog.SaveFile
+            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        }
+
+        // ProgressBar{}
+
+        Button {
+            onClicked: checkArgument(textField.text, bsType.text)
             contentItem: Text {
-                text: "GENERATE BS"
+                text: "GENERATE"
                 // font: 10
                 // opacity: enabled ? 1.0 : 0.3
                 // color: control.down ? "#17a81a" : "#21be2b"
@@ -64,16 +120,20 @@ Window {
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
-
             background: Rectangle {
-                implicitWidth: 150
+                implicitWidth: 110
                 implicitHeight: 40
                 opacity: enabled ? 1 : 0.3
-                border.color: control.down ? "#17a81a" : "#21be2b"
                 border.width: 1.5
                 radius: 15
             }
             Layout.alignment: Qt.AlignHCenter
+        }
+
+        MessageDialog {
+            id: dialog
+            buttons: MessageDialog.Ok
+            text: "The BS was generate sucessfully"
         }
     }
 }
