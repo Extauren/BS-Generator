@@ -66,12 +66,12 @@
             {% include 'physical_pers.jinja' %}
         {% endif %}
         <p class="souscripteur-end">Ci-après dénommé(e) le « Souscripteur »</p>
-        <p>Après pris connaissance des conditions et modalités de constitution de la SEP TECHMIND {{ data._Data__target_name.upper() }},</p>
+        <p>Après avoir pris connaissance des conditions et modalités de constitution de la SEP TECHMIND {{ data._Data__target_name.upper() }},</p>
         <p>Le Souscripteur :</p>
         <ul class="souscripteur">
             <li>reconnaît avoir eu toutes les informations nécessaires lui permettant d’apprécier la nature, la structuration, les risques et les coûts de la souscription projetée ;</li>
-            <li>reconnaît avoir pu poser toutes les questions nécessaires à sa bonne compréhension et se déclare pleinement satisfait des réponses qui lui ont été fournies.</li>
-            <li>reconnaît avoir pris connaissance des statuts de la Société en date du {{ data._Data__status_date }} dont un exemplaire lui a été remis et y adhère.</li>
+            <li>reconnaît avoir pu poser toutes les questions nécessaires à sa bonne compréhension et se déclare pleinement satisfait des réponses qui lui ont été fournies ;</li>
+            <li>reconnaît avoir pris connaissance des statuts de la Société en date du {{ data._Data__status_date }} dont un exemplaire lui a été remis et y adhère ;</li>
             <li>accepte en cas de modification des statuts de la Société que ces derniers une fois modifiés lui soient notifiés par tout moyen écrit par le Gérant.</li>
         </ul>
         <p>
@@ -90,13 +90,13 @@
             La modification des textes applicables aux sociétés en participation en vigueur postérieurement à la date
             de constitution est susceptible d’avoir un impact juridique et fiscal négatif pour la SEP TECHMIND
             {{ data._Data__target_name.upper() }} et/ou ses associés. De plus, cette souscription peut engendrer des considérations fiscales
-            complexes qui peuvent différer pour chaque associé
+            complexes qui peuvent différer pour chaque associé.
         </p>
         <p>Après avoir pris connaissance de ce qui précède, le Souscripteur :</p>
         <ul>
-            <li>Déclare apporter {{ data._Data__montant_souscription }} € à la SEP, correspondant à l’acquisition de {{ data._Data__part_sociales }} parts sociales telles que définies dans les statuts;</li>
-            <li>Déclare libérer intégralement le montant de la souscription, soit la somme de {{ data._Data__montant_souscription }} € ({{ data._Data__montant_souscription_letter }});</li>
-            <li>Déclare verser les frais d’entrée s’élevant à {{ data._Data__frais_entre }} € ({{ data._Data__frais_entre_letter }}) rémunérant les tâches de négociation et de réalisation de l’Opération;</li>
+            <li>Déclare apporter {{ data._Data__montant_souscription }} € à la SEP, correspondant à l’acquisition de {{ data._Data__part_sociales }} parts sociales telles que définies dans les statuts ;</li>
+            <li>Déclare libérer intégralement le montant de la souscription, soit la somme de {{ data._Data__montant_souscription }} € ({{ data._Data__montant_souscription_letter }}) ;</li>
+            <li>Déclare verser les frais d’entrée s’élevant à {{ data._Data__frais_entre }} € ({{ data._Data__frais_entre_letter }}) rémunérant les tâches de négociation et de réalisation de l’Opération ;</li>
             <li><strong>Déclare en conséquence libérer la totalité de la souscription et des frais d’entrée, soit :
                 <ul class="souscripteur">
                     <li>la somme de {{ data._Data__part_sociales }} € par virement bancaire établi à l’ordre du compte dédié à l’opération, identifié par son IBAN : {{ data._Data__iban }}, ouvert au nom du Gérant,</li>
@@ -109,7 +109,8 @@
         <p>Fait à Paris, le {{ data._Data__date }},</p>
         <p>Précédée de la mention :</p>
         <p style="font-style: italic;">«Bon pour la souscription de {{ data._Data__part_sociales }} parts sociales de la SEP TECHMIND {{ data._Data__target_name.upper() }}»</p>
-        <br><br>
+        <br><br><br>
+        <div class="horizontal_line"></div>
         <p>{{ data._Data__structure.upper() }} représenté par {{ data._Data__gender }} {{ data._Data__legal_firstname}} {{ data._Data__legal_lastname.upper() }}</p>
     </body>
 </html>
