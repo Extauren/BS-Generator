@@ -27,6 +27,6 @@ for data in pappers_data["papper"]:
        # mail
        'siren': data["siren"],
        'greffe': data["data"]["greffe"],
-       'forme_juridique': data["data"]["forme_juridique"]
-       # siege social deux option siege ou etablissement
+       'forme_juridique': data["data"]["forme_juridique"],
+       'addr': data["data"]["siege"]["adresse_ligne_1"]
     })
