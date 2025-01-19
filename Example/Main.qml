@@ -111,15 +111,15 @@ Window {
 
         Button {
             onClicked: checkArgument(textField.text, bsType.text)
-            contentItem: Text {
-                text: "GENERATE"
-                // font: 10
-                // opacity: enabled ? 1.0 : 0.3
-                // color: control.down ? "#17a81a" : "#21be2b"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
+            // contentItem: Text {
+            //     text: "GENERATE"
+            //     // font: 10
+            //     // opacity: enabled ? 1.0 : 0.3
+            //     // color: control.down ? "#17a81a" : "#21be2b"
+            //     horizontalAlignment: Text.AlignHCenter
+            //     verticalAlignment: Text.AlignVCenter
+            //     elide: Text.ElideRight
+            // }
             // background: Rectangle {
             //     implicitWidth: 110
             //     implicitHeight: 40
