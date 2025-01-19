@@ -7,8 +7,8 @@ import QtCore
 import bs_generator 1.0
 
 Window {
-    width: 300
-    height: 200
+    width: 600
+    height: 400
     visible: true
     title: "BS Generator"
 
