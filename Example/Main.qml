@@ -24,7 +24,7 @@ Window {
             return
         }
         else {
-            pyConsole.generate_bs(structure, bsType, fileDialog.selectedFile)
+            pyConsole.generate_bs(structure, false, fileDialog.selectedFile)
             dialog.open()
         }
     }
