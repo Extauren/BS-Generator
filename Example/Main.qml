@@ -49,13 +49,13 @@ Window {
             id: textField
             placeholderText: qsTr("Structure name")
             Layout.alignment: Qt.AlignHCenter
-            background: Rectangle {
-                implicitWidth: 150
-                implicitHeight: 30
-                opacity: enabled ? 1 : 0.3
-                border.width: 1.5
-                radius: 10
-            }
+            // background: Rectangle {
+            //     implicitWidth: 150
+            //     implicitHeight: 30
+            //     opacity: enabled ? 1 : 0.3
+            //     border.width: 1.5
+            //     radius: 10
+            // }
         }
         
         ButtonGroup {
@@ -120,13 +120,13 @@ Window {
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
-            background: Rectangle {
-                implicitWidth: 110
-                implicitHeight: 40
-                opacity: enabled ? 1 : 0.3
-                border.width: 1.5
-                radius: 15
-            }
+            // background: Rectangle {
+            //     implicitWidth: 110
+            //     implicitHeight: 40
+            //     opacity: enabled ? 1 : 0.3
+            //     border.width: 1.5
+            //     radius: 15
+            // }
             Layout.alignment: Qt.AlignHCenter
         }
 
