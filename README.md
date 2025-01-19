@@ -36,6 +36,13 @@ TABLE_TARGET =
 Run the program :
 
 ```
-python3 generator.py ${structur_name}
+usage: bs_generator.py [-h] [--docx] [--bsa-air] structure
+
+positional arguments:
+  structure   structure name
+
+options:
+  -h, --help  show this help message and exit
+  --docx      generate docx
+  --bsa-air   generate bsa air bs
 ```
-Example : ``` python3 bs_generator.py "Google" ```
