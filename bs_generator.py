@@ -4,8 +4,15 @@ from jinja2 import Environment, FileSystemLoader
 from spire.doc import *
 from data import Data
 
-def print_help() -> None:
-    print('python bs_generator.py "{structure_name} --bsa_air"')
+def convert_html_to_docx(html):
+    document = Document()
+    sec = document.AddSection()
+    paragraph = sec.AddParagraph()
+
+    paragraph.AppendHTML(html)
+    document.SaveToFile("test.docx", FileFormat.Docx2016)
+    document.Close()
+    print("Docx have been generated succesfully")
 
 def html_to_pdf(html_content, output_path) -> None:
     HTML(string=html_content).write_pdf(output_path)
@@ -28,16 +35,6 @@ def get_arguments():
     parser.add_argument('--bsa-air', action='store_true', help='generate bsa air bs')
     args = parser.parse_args()
     return args
-
-def convert_html_to_docx(html):
-    document = Document()
-    sec = document.AddSection()
-    paragraph = sec.AddParagraph()
-
-    paragraph.AppendHTML(html)
-    document.SaveToFile("test.docx", FileFormat.Docx2016)
-    document.Close()
-    print("Docx have been generated succesfully")
 
 def main():
     args = None
