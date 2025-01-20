@@ -6,7 +6,6 @@ from datetime import datetime
 from num2words import num2words
 import numpy as np
 from pyairtable import Api
-from dotenv import load_dotenv
 
 class Data:
     __api = None
@@ -49,7 +48,6 @@ class Data:
     __total_letter: str = None
 
     def __init__(self, structure: str, bsa_air: bool) -> None:
-        load_dotenv()
         self.__api = Api(os.environ['API_KEY'])
         self.__get_airtable_data(structure)
         self.__get_target_data()
