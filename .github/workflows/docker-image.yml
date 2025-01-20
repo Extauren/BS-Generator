@@ -22,5 +22,5 @@ jobs:
       - name: Build and Push the Docker image on Github registry
         run: |
           docker build . --file Dockerfile --tag bs_generator:latest
-          docker push ghcr.io/Extauren/bs_generator:latest
+          docker push ghcr.io/extauren/bs_generator:latest
       
