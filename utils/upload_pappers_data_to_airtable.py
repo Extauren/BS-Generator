@@ -1,7 +1,6 @@
 import os
 import json
 from pyairtable import Api
-from pyairtable.formulas import match
 from dotenv import load_dotenv
 
 nom_complet: str = ""
