@@ -154,8 +154,8 @@ class Data:
                 try:
                     if structure == record['fields']['Structure']:
                         self.__siege_social = record['fields']['Siège social']
-                        self.__legal_firstname = record['fields']['Nom']
-                        self.__legal_lastname = record['fields']['Prénom']
+                        self.__legal_firstname = record['fields']['Prénom']
+                        self.__legal_lastname = record['fields']['Nom']
                         self.__legal_email = record['fields']['Mail']
                         self.__legal_type = record['fields']["L'investissement est-il réalisé à titre personnel ou via une holding ?"]
                         self.__rcs = record['fields']['RCS']
