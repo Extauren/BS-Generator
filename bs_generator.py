@@ -21,7 +21,7 @@ def html_to_pdf(html_content, output_path) -> None:
     HTML(string=html_content).write_pdf(output_path)
 
 def generate_pfd(data: Data, docx: bool, name: str) -> None:
-    path: str = os.environ["FOLDER"] + name + ".pdf"
+    path: str = os.environ["FOLDER"] + name.replace(" ", "\ ") + ".pdf"
     env = Environment(loader = FileSystemLoader('templates'))
     template = env.get_template('template.jinja')
     html: str = template.render(data = data)
