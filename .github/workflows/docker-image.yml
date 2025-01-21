@@ -24,7 +24,6 @@ jobs:
           docker build . --file Dockerfile --tag ghcr.io/extauren/bs_generator:latest
           docker push ghcr.io/extauren/bs_generator:linux
 
-jobs:
   build-and-push-arm:
     run-on: macos-latest
     steps:
