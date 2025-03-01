@@ -46,6 +46,7 @@ class Data:
     __bsa_air: str = "False"
     __montant_total: str = None
     __total_letter: str = None
+    __bank_name: str = None
 
     def __init__(self, structure: str, bsa_air: bool) -> None:
         self.__api = Api(os.environ['API_KEY'])
@@ -139,6 +140,11 @@ class Data:
                 self.__target_rcs = record['fields']['RCS de la société cible']
                 self.__status_date = record['fields']['Date des statuts']
                 self.__montant_total = record['fields']['Montant total investi']
+                self.__action_name = record['fields']['Nom action']
+                self.__action_price = record['fields']['Prix par action'][:-1]
+                self.__iban = record['fields']['IBAN SPV']
+                self.__iban_techmind = record['fields']['IBAN Frais']
+                self.__bank_name = record['fields']['Nom de la banque']
                 return
         print("Error: cannot get target data from airtable")
         exit()
@@ -166,12 +172,8 @@ class Data:
                             self.__forme_social = None
                         self.__postal_code = record['fields']['Code postal']
                         self.__montant_investi = record['fields']['Montant investi'][:-1]
-                        self.__action_name = record['fields']['Nom action']
                         self.__gender = record['fields']['M/F']
                         self.__entries_fee_pourcentage = record['fields']['Frais']
-                        self.__action_price = record['fields']['Prix par action'][:-1]
-                        self.__iban = record['fields']['IBAN SPV']
-                        self.__iban_techmind = record['fields']['IBAN Frais']
                         self.__iban_img = record['fields']['Image IBAN SPV']
                         self.__iban_img = self.__iban_img[0]["url"]
                         get_data = True
