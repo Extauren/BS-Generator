@@ -1,6 +1,6 @@
 import os
 import math
-import json
+import string
 from babel.dates import format_datetime
 from datetime import datetime
 from num2words import num2words
@@ -10,7 +10,7 @@ from pyairtable import Api
 class Data:
     __api = None
     __structure: str = None
-    __siege_social: str = None
+    # __siege_social: str = None
     __legal_email: str = None
     __legal_lastname: str = None
     __legal_firstname: str = None
@@ -47,12 +47,13 @@ class Data:
     __montant_total: str = None
     __total_letter: str = None
     __bank_name: str = None
+    __pourcent_droits_sociaux: str = None
+    __sas = False
 
-    def __init__(self, structure: str, bsa_air: bool) -> None:
+    def __init__(self, structure: str, bsa_air: bool, sas: bool) -> None:
         self.__api = Api(os.environ['API_KEY'])
-        self.__get_airtable_data(structure)
         self.__get_target_data()
-        self.__get_pappers_data()
+        self.__get_airtable_data(structure)
         self.__calc_action_seed()
         self.__frais_entre = self.__set_entries_fee()
         self.__montant_souscription = self.__calc_montant_souscription()
@@ -64,10 +65,13 @@ class Data:
         self.__frais_entre_letter = self.__convert_price_in_letter(self.__frais_entre)
         self.__montant_investi_letter = self.__convert_price_in_letter(self.__montant_investi)
         self.__total_letter = self.__convert_price_in_letter(self.__montant_total)
-        self.__set_date()
+        self.__date = format_datetime(datetime.now(), "dd MMMM yyyy", locale='fr_FR')
         self.__set_gender_in_letter()
+        self.__pourcent_droits_sociaux = self.__calc_pourcentage_droits_sociaux()
         if bsa_air:
             self.__bsa_air = True
+        if sas:
+            self.__sas = True
 
     def __convert_price_to_fr(self, price: str) -> str:
         price_fr: str = price.replace(".", ",")
@@ -99,6 +103,11 @@ class Data:
                 price_fr += " et " + price_letter_list[1] + " centimes"
         return price_fr
 
+    def __calc_pourcentage_droits_sociaux(self) -> str:
+        montant_investi: float = float(self.__montant_investi.replace(",", ".").replace(" ", ""))
+        montant_total: float = float(self.__montant_total.replace(",", ".").replace(" " , ""))
+        return (montant_investi / montant_total) * 100
+
     def __calc_part_sociale(self) -> str:
         montant_souscription_nb: float = float(self.__montant_souscription.replace(",", ".").replace(" ", ""))
         self.__part_social: str = str(int(montant_souscription_nb * 100))
@@ -119,7 +128,7 @@ class Data:
         return self.__convert_price_to_fr(self.__entries_fee)
 
     def __calc_action_seed(self) -> None:
-        montant_nb: float = float(self.__montant_investi.replace(",", ".").replace(" ", ""))
+        montant_nb = float(self.__montant_investi.replace(" ", "").replace(",", "."))
         action_price_nb: float = float(self.__action_price.replace(",", ".").replace(" ", ""))
         
         self.__action_seed = int(np.ceil(montant_nb / action_price_nb))
@@ -129,6 +138,15 @@ class Data:
         montant: str = "{:.2f}".format(self.__action_seed * action_price_nb)
 
         return self.__convert_price_to_fr(montant)
+
+    def __get_data(self, name: str, record):
+        data: str = None
+        try:
+            data = record['fields'][name]
+        except:
+            print("Failed to get data from airtable :", name)
+            exit()
+        return data
 
     def __get_target_data(self) -> None:
         table = self.__api.table(os.environ['BASE_ID'], os.environ['TABLE_TARGET'])
@@ -145,13 +163,14 @@ class Data:
                 self.__iban = record['fields']['IBAN SPV']
                 self.__iban_techmind = record['fields']['IBAN Frais']
                 self.__bank_name = record['fields']['Nom de la banque']
+                self.__iban_img = record['fields']['Photo IBAN SPV']
+                self.__iban_img = self.__iban_img[0]["url"]
                 return
         print("Error: cannot get target data from airtable")
         exit()
 
     def __get_airtable_data(self, structure: str) -> None:
-        get_data: bool = False
-        table = self.__api.table(os.environ['BASE_ID'], os.environ['TABLE_NAME'])
+        table = self.__api.table(os.environ['BASE_ID'], os.environ['TABLE_INVEST'])
         records = table.all()
 
         self.__structure = structure
@@ -159,43 +178,21 @@ class Data:
             if record != {} and record['fields'] != {}:
                 try:
                     if structure == record['fields']['Structure']:
-                        self.__siege_social = record['fields']['Siège social']
-                        self.__legal_firstname = record['fields']['Prénom']
-                        self.__legal_lastname = record['fields']['Nom']
-                        self.__legal_email = record['fields']['Mail']
-                        self.__legal_type = record['fields']["L'investissement est-il réalisé à titre personnel ou via une holding ?"]
-                        self.__rcs = record['fields']['RCS']
-                        self.__city = record['fields']['Ville']
-                        try:
-                            self.__forme_social = record['fields']['Forme juridique']
-                        except:
-                            self.__forme_social = None
-                        self.__postal_code = record['fields']['Code postal']
+                        self.__siege_social_addr = self.__get_data("Siège social", record)
+                        self.__legal_firstname = self.__get_data("Prénom", record)
+                        self.__legal_lastname = self.__get_data("Nom", record)
+                        self.__legal_email = self.__get_data("Mail", record)
+                        self.__legal_type = self.__get_data("L'investissement est-il réalisé à titre personnel ou via une holding ?", record)
+                        self.__rcs = self.__get_data("RCS", record)
+                        self.__city = self.__get_data("Ville", record)
+                        self.__tribunal_name = self.__get_data("Ville RCS", record)
+                        self.__forme_social = self.__get_data("forme_juridique", record)
+                        self.__postal_code = self.__get_data("Code postal", record)
                         self.__montant_investi = record['fields']['Montant investi'][:-1]
-                        self.__gender = record['fields']['M/F']
-                        self.__entries_fee_pourcentage = record['fields']['Frais']
-                        self.__iban_img = record['fields']['Image IBAN SPV']
-                        self.__iban_img = self.__iban_img[0]["url"]
-                        get_data = True
-                        break
+                        self.__gender = self.__get_data("sexe", record)
+                        self.__entries_fee_pourcentage = self.__get_data("Frais", record)
+                        return
                 except Exception as e:
-                    print(e)
-        if not get_data:
-            print("Error: get data from airtable failed")
-            exit()
-
-    def __get_pappers_data(self) -> None:
-        pappers_data: json = None
-
-        with open("pappers.json", "r") as f:
-            pappers_data = json.load(f)
-        for data in pappers_data["papper"]:
-            if data["siren"] == self.__rcs.replace(" ", ""):
-                self.__tribunal_name = data["data"]["greffe"] #to vérify
-                self.__siege_social_addr = data["data"]["siege"]["adresse_ligne_1"] # addr ligne 2 ?
-                return
-        print("Error: cannot get data from pappers")
+                    None
+        print("Error: get data from airtable failed in get_airtable_data")
         exit()
-
-    def __set_date(self) -> None:
-        self.__date = format_datetime(datetime.now(), "dd MMMM yyyy", locale='fr_FR')

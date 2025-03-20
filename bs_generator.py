@@ -39,6 +39,7 @@ def get_arguments():
     parser.add_argument('-n', type = str, help = "bs name")
     parser.add_argument('--docx', action='store_true', help='generate docx')
     parser.add_argument('--bsa-air', action='store_true', help='generate bsa air bs')
+    parser.add_argument('--sas', action='store_true', help='sas')
     args = parser.parse_args()
     return args
 
@@ -47,7 +48,7 @@ def main():
 
     load_dotenv()
     args = get_arguments()
-    data = Data(args.s, args.bsa_air)
+    data = Data(args.s, args.bsa_air, args.sas)
     generate_pfd(data, args.docx, args.n)
 
 if __name__ == "__main__":

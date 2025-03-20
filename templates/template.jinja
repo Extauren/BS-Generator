@@ -10,8 +10,19 @@
         </div>
         <div style="margin-top: 40px;">
             <p>
-                La Société en Participation TECHMIND {{ data._Data__target_name.upper() }} (la « SEP »), non révélée aux tiers, a été créée aux
-                fins
+                La Société 
+                {% if data._Data__sas|string() == "True" %}
+                par Action Simplifiée
+                {% else %}
+                en Participation 
+                {% endif %}
+                TECHMIND {{ data._Data__target_name.upper() }}
+                {% if data._Data__sas|string() == "True" %}
+                (la « SAS »),
+                {% else %}
+                (la « SEP »),
+                {% endif %}
+                non révélée aux tiers, a été créée aux fins
                 {% if data._Data__bsa_air|string() == "True" %}
                     d'investir dans
                 {% else %}
@@ -22,7 +33,12 @@
                 restructuration (notamment fusion, absorption).
             </p>
             <p>
-                La SEP a également comme objet la gestion et la vente de ces titres, et plus globalement et généralement
+                {% if data._Data__sas|string() == "True" %}
+                La SAS
+                {% else %}
+                La SEP 
+                {% endif %}
+                a également comme objet la gestion et la vente de ces titres, et plus globalement et généralement
                 toutes opérations financières, commerciales, industrielles, mobilières et immobilières pouvant se rattacher
                 directement ou indirectement à l'objet ci-dessus ou à tous objets similaires ou connexes, de nature à
                 favoriser son développement ou son extension.
@@ -36,15 +52,38 @@
                 {% include 'bsa_air.jinja' %}
             {% else %}
                 <p>
-                    Afin de participer à l'augmentation de capital de la Société {{ data._Data__target_name }} par l'intermédiaire de la SEP, les
-                    associés ont décidé d'apporter à la SEP, en numéraire, la somme hors frais d'entrée de {{ data._Data__montant_total }} euros ({{ data._Data__total_letter }}) aux fins de la
+                    Afin de participer à l'augmentation de capital de la Société {{ data._Data__target_name }} par l'intermédiaire de la 
+                    {% if data._Data__sas|string() == "True" %}
+                    SAS
+                    {% else %}
+                    SEP
+                    {% endif %}
+                    , les associés ont décidé d'apporter à la 
+                    {% if data._Data__sas|string() == "True" %}
+                    SAS,
+                    {% else %}
+                    SEP,
+                    {% endif %}
+                    en numéraire, la somme hors frais d'entrée de {{ data._Data__montant_total }} euros ({{ data._Data__total_letter }}) aux fins de la
                     souscription {{ data._Data__action_seed }} actions “{{ data._Data__action_name }}”, au prix de {{ data._Data__action_price }} euros par action de la société {{ data._Data__target_name }}.
                 </p>
             {% endif %}
             <p>    
-                Le prix de souscription des parts de la SEP devra être libéré en totalité lors de leur souscription en
+                Le prix de souscription des parts de la 
+                {% if data._Data__sas|string() == "True" %}
+                SAS
+                {% else %}
+                SEP
+                {% endif %}
+                devra être libéré en totalité lors de leur souscription en
                 numéraire, y compris, le cas échéant, par voie de compensation avec des créances liquides et exigibles
-                détenues sur la SEP dans les conditions fixées par la loi.
+                détenues sur la
+                {% if data._Data__sas|string() == "True" %}
+                SAS
+                {% else %}
+                SEP
+                {% endif %}
+                dans les conditions fixées par la loi.
             </p>
             <p>    
                 Le montant de la souscription devra être déposé sur le compte dédié, ouvert au nom du Gérant, auprès de
@@ -66,7 +105,13 @@
             {% include 'physical_pers.jinja' %}
         {% endif %}
         <p class="souscripteur-end">Ci-après dénommé(e) le « Souscripteur »</p>
-        <p>Après avoir pris connaissance des conditions et modalités de constitution de la SEP TECHMIND {{ data._Data__target_name.upper() }},</p>
+        <p>Après avoir pris connaissance des conditions et modalités de constitution de la
+        {% if data._Data__sas|string() == "True" %}
+        SAS
+        {% else %}
+        SEP
+        {% endif %}
+        TECHMIND {{ data._Data__target_name.upper() }},</p>
         <p>Le Souscripteur :</p>
         <ul class="souscripteur">
             <li>reconnaît avoir eu toutes les informations nécessaires lui permettant d’apprécier la nature, la structuration, les risques et les coûts de la souscription projetée ;</li>
@@ -88,13 +133,25 @@
         </p>
         <p>
             La modification des textes applicables aux sociétés en participation en vigueur postérieurement à la date
-            de constitution est susceptible d’avoir un impact juridique et fiscal négatif pour la SEP TECHMIND
+            de constitution est susceptible d’avoir un impact juridique et fiscal négatif pour la
+            {% if data._Data__sas|string() == "True" %}
+            SAS
+            {% else %}
+            SEP
+            {% endif %}
+            TECHMIND
             {{ data._Data__target_name.upper() }} et/ou ses associés. De plus, cette souscription peut engendrer des considérations fiscales
             complexes qui peuvent différer pour chaque associé.
         </p>
         <p>Après avoir pris connaissance de ce qui précède, le Souscripteur :</p>
         <ul>
-            <li>Déclare apporter {{ data._Data__montant_souscription }} € à la SEP, correspondant à l’acquisition de {{ data._Data__part_sociales }} parts sociales telles que définies dans les statuts ;</li>
+            <li>Déclare apporter {{ data._Data__montant_souscription }} € à la
+            {% if data._Data__sas|string() == "True" %}
+            SAS
+            {% else %}
+            SEP
+            {% endif %}
+            , correspondant à l’acquisition de {{ data._Data__pourcent_droits_sociaux }}% droits sociaux tel que définis dans les statuts ;</li>
             <li>Déclare libérer intégralement le montant de la souscription, soit la somme de {{ data._Data__montant_souscription }} € ({{ data._Data__montant_souscription_letter }}) ;</li>
             <li>Déclare verser les frais d’entrée s’élevant à {{ data._Data__frais_entre }} € ({{ data._Data__frais_entre_letter }}) rémunérant les tâches de négociation et de réalisation de l’Opération ;</li>
             <li><strong>Déclare en conséquence libérer la totalité de la souscription et des frais d’entrée, soit :
@@ -108,7 +165,13 @@
         <br>
         <p>Fait à Paris, le {{ data._Data__date }},</p>
         <p>Précédée de la mention :</p>
-        <p style="font-style: italic;">«Bon pour la souscription de {{ data._Data__part_sociales }} parts sociales de la SEP TECHMIND {{ data._Data__target_name.upper() }}»</p>
+        <p style="font-style: italic;">«Bon pour la souscription de {{ data._Data__pourcent_droits_sociaux }}% droits sociaux de la
+        {% if data._Data__sas|string() == "True" %}
+        SAS
+        {% else %}
+        SEP
+        {% endif %}
+        TECHMIND {{ data._Data__target_name.upper() }}»</p>
         <br><br><br>
         <div class="horizontal_line"></div>
         <p>{{ data._Data__structure.upper() }} représenté par {{ data._Data__gender }} {{ data._Data__legal_firstname}} {{ data._Data__legal_lastname.upper() }}</p>
