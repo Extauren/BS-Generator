@@ -1,6 +1,5 @@
 import os
 import math
-import string
 from babel.dates import format_datetime
 from datetime import datetime
 from num2words import num2words
@@ -49,6 +48,7 @@ class Data:
     __bank_name: str = None
     __pourcent_droits_sociaux: str = None
     __sas = False
+    __spv_name = None
 
     def __init__(self, structure: str, bsa_air: bool, sas: bool) -> None:
         self.__api = Api(os.environ['API_KEY'])
@@ -156,6 +156,7 @@ class Data:
         for record in records:
             if record['fields'] != {}:
                 self.__target_name = record['fields']['Nom de la société cible']
+                self.__spv_name = record['fields']['Nom du SPV']
                 self.__target_addr = record['fields']['Adresse de la société cible']
                 self.__target_rcs = record['fields']['RCS de la société cible']
                 self.__status_date = record['fields']['Date des statuts']

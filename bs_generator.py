@@ -1,16 +1,16 @@
 import os
-import argparse
+from argparse import ArgumentParser, Namespace
 from dotenv import load_dotenv
 from weasyprint import HTML
-from jinja2 import Environment, FileSystemLoader
-from spire.doc import *
+from jinja2 import Environment, FileSystemLoader, Template
+from spire.doc import Document, FileFormat, Section, Paragraph
 from data import Data
 
-def convert_html_to_docx(html, name: str):
+def convert_html_to_docx(html, name: str) -> None:
     path: str = os.environ["FOLDER"] + name + ".docx"
-    document = Document()
-    sec = document.AddSection()
-    paragraph = sec.AddParagraph()
+    document: Document = Document()
+    section: Section = document.AddSection()
+    paragraph: Paragraph = section.AddParagraph()
 
     paragraph.AppendHTML(html)
     document.SaveToFile(path, FileFormat.Docx2016)
@@ -22,8 +22,8 @@ def html_to_pdf(html_content, output_path) -> None:
 
 def generate_pfd(data: Data, docx: bool, name: str) -> None:
     path: str = os.environ["FOLDER"] + name + ".pdf"
-    env = Environment(loader = FileSystemLoader('templates'))
-    template = env.get_template('template.jinja')
+    env: Environment = Environment(loader = FileSystemLoader('templates'))
+    template: Template = env.get_template('template.jinja')
     html: str = template.render(data = data)
     
     if docx is True:
@@ -32,19 +32,19 @@ def generate_pfd(data: Data, docx: bool, name: str) -> None:
     html_to_pdf(html, path)
     print("PDF have been generated succesfully")
 
-def get_arguments():
-    parser = argparse.ArgumentParser()
+def get_arguments() -> Namespace:
+    parser: ArgumentParser = ArgumentParser()
     
-    parser.add_argument('-s', type = str, help='structure name')
-    parser.add_argument('-n', type = str, help = "bs name")
+    parser.add_argument('-s', type = str, help='structure name', required=True)
+    parser.add_argument('-n', type = str, help = "bs name", required=True)
     parser.add_argument('--docx', action='store_true', help='generate docx')
     parser.add_argument('--bsa-air', action='store_true', help='generate bsa air bs')
     parser.add_argument('--sas', action='store_true', help='sas')
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
-def main():
-    args = None
+def main() -> None:
+    args: Namespace = None
+    data: Data = None
 
     load_dotenv()
     args = get_arguments()

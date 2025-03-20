@@ -2,7 +2,7 @@
 <html>
     {% include 'styles.jinja' %}
     <body>
-        {% with name=data._Data__target_name.upper() %}
+        {% with name=data._Data__target_name.upper(), spv_name=data._Data__spv_name.upper() %}
             {% include 'header.jinja' %}
         {% endwith %}
         <div class="header" style="margin-top: 40px">
@@ -12,11 +12,10 @@
             <p>
                 La Société 
                 {% if data._Data__sas|string() == "True" %}
-                par Action Simplifiée
+                par Action Simplifiée TECHMIND {{ data._Data__spv_name.upper() }}
                 {% else %}
-                en Participation 
+                en Participation TECHMIND {{ data._Data__target_name.upper() }}
                 {% endif %}
-                TECHMIND {{ data._Data__target_name.upper() }}
                 {% if data._Data__sas|string() == "True" %}
                 (la « SAS »),
                 {% else %}
@@ -92,7 +91,7 @@
             </p>
         </div>
         <img src={{ data._Data__iban_img }} alt="iban image" style="width: 100%;height: 235px;"/>
-        {% with name=data._Data__target_name.upper() %}
+        {% with name=data._Data__target_name.upper(), spv_name=data._Data__spv_name.upper() %}
             {% include 'header.jinja' %}
         {% endwith %}
         <div class="header">
@@ -107,11 +106,11 @@
         <p class="souscripteur-end">Ci-après dénommé(e) le « Souscripteur »</p>
         <p>Après avoir pris connaissance des conditions et modalités de constitution de la
         {% if data._Data__sas|string() == "True" %}
-        SAS
+        SAS TECHMIND {{ data._Data__spv_name.upper() }}
         {% else %}
-        SEP
+        SEP TECHMIND {{ data._Data__target_name.upper() }}
         {% endif %}
-        TECHMIND {{ data._Data__target_name.upper() }},</p>
+        ,</p>
         <p>Le Souscripteur :</p>
         <ul class="souscripteur">
             <li>reconnaît avoir eu toutes les informations nécessaires lui permettant d’apprécier la nature, la structuration, les risques et les coûts de la souscription projetée ;</li>
@@ -135,12 +134,11 @@
             La modification des textes applicables aux sociétés en participation en vigueur postérieurement à la date
             de constitution est susceptible d’avoir un impact juridique et fiscal négatif pour la
             {% if data._Data__sas|string() == "True" %}
-            SAS
+            SAS TECHMIND {{ data._Data__spv_name.upper() }}
             {% else %}
-            SEP
+            SEP TECHMIND {{ data._Data__target_name.upper() }}
             {% endif %}
-            TECHMIND
-            {{ data._Data__target_name.upper() }} et/ou ses associés. De plus, cette souscription peut engendrer des considérations fiscales
+            et/ou ses associés. De plus, cette souscription peut engendrer des considérations fiscales
             complexes qui peuvent différer pour chaque associé.
         </p>
         <p>Après avoir pris connaissance de ce qui précède, le Souscripteur :</p>
@@ -167,11 +165,11 @@
         <p>Précédée de la mention :</p>
         <p style="font-style: italic;">«Bon pour la souscription de {{ data._Data__pourcent_droits_sociaux }}% droits sociaux de la
         {% if data._Data__sas|string() == "True" %}
-        SAS
+        SAS TECHMIND {{ data._Data__spv_name.upper() }}
         {% else %}
-        SEP
+        SEP TECHMIND {{ data._Data__target_name.upper() }}
         {% endif %}
-        TECHMIND {{ data._Data__target_name.upper() }}»</p>
+        »</p>
         <br><br><br>
         <div class="horizontal_line"></div>
         <p>{{ data._Data__structure.upper() }} représenté par {{ data._Data__gender }} {{ data._Data__legal_firstname}} {{ data._Data__legal_lastname.upper() }}</p>
