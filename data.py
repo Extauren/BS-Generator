@@ -106,7 +106,9 @@ class Data:
     def __calc_pourcentage_droits_sociaux(self) -> str:
         montant_investi: float = float(self.__montant_investi.replace(",", ".").replace(" ", ""))
         montant_total: float = float(self.__montant_total.replace(",", ".").replace(" " , ""))
-        return (montant_investi / montant_total) * 100
+        result: float = (montant_investi / montant_total) * 100
+
+        return round(result, 2)
 
     def __calc_part_sociale(self) -> str:
         montant_souscription_nb: float = float(self.__montant_souscription.replace(",", ".").replace(" ", ""))
