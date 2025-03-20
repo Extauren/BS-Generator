@@ -30,7 +30,7 @@ fi
 echo -e "${GR}Check if a new docker image is available${NC}"
 docker pull ghcr.io/extauren/bs_generator:latest
 echo -e "${GR}PDF is generating, please wait...${NC}"
-docker run --env-file .env --name bs_generator bs_generator python bs_generator.py -s "$struc_name" -n "$output" $docx $sas
+docker run --env-file .env --name bs_generator ghcr.io/extauren/bs_generator:latest python bs_generator.py -s "$struc_name" -n "$output" $docx $sas
 docker cp bs_generator:/app/$output.pdf "$FOLDER_OUTPUT"
 if [ -n "$docx" ]; then
     docker cp bs_generator:/app/$output.docx "$FOLDER_OUTPUT"
